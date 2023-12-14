@@ -6,7 +6,7 @@
 ## About
 
 GenoCrab brings blazingly fast computing performance to your 
-genomics problems. Born out of an MSc Bioinformatics assignment where no one specifically asked for a CLI tool.
+genomics problems. Born out of an MSc Bioinformatics assignment where no one asked for a CLI tool.
 
 ## Features
 
