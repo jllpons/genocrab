@@ -1,16 +1,20 @@
 # GenoCrab 🦀
 
-**GenoCrab**: the Rust-based toolkit that's clawing its way to the top of the genomics food chain 🧬
+**GenoCrab**: the Rust-based toolkit for solving your
+[Rosalind](<https://rosalind.info/problems/list-view/>) problems 🧬
 
 ## About
 
-GenoCrab brings high-performance computing to genomics, all wrapped up in the efficient, memory-safe embrace of Rust. Born out of an MSc Bioinformatics assignment where no one specifically asked for a CLI tool. *And because all the cool kids program in Rust*.
+GenoCrab brings blazingly fast computing performance performance to your 
+genomics problems. Born out of an MSc Bioinformatics assignment where no one specifically asked for a CLI tool. *And bc all the cool kids program in Rust*.
 
 ## Features
 
-- **Crab-Like Speed**: Experience the 'blazingly fast' (wink, wink) performance, as if your data is scuttling through the sandy beaches of computation.
-- **Shell-Shocked Accuracy**: Precision in bioinformatics is key, and GenoCrab doesn't play around. It's as accurate as a crab's claw in a sea of clams.
-- **Pinch of Flexibility**: With multiple subcommands for k-Mer Composition, Overlap Graphs, and more, GenoCrab adapts like a crab to the tidal pools of genomic data.
+1. **k-Mer Composition**: Display the counts of all posible k-mers of k length
+   found in a given sequence ordered lexicographically.
+
+The rest of features are still WIP.
+
 
 ## Getting Started
 
