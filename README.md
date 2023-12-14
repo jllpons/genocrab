@@ -5,8 +5,8 @@
 
 ## About
 
-GenoCrab brings blazingly fast computing performance performance to your 
-genomics problems. Born out of an MSc Bioinformatics assignment where no one specifically asked for a CLI tool. *And bc all the cool kids program in Rust*.
+GenoCrab brings blazingly fast computing performance to your 
+genomics problems. Born out of an MSc Bioinformatics assignment where no one specifically asked for a CLI tool.
 
 ## Features
 
