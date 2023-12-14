@@ -4,7 +4,7 @@
 
 ## About
 
-GenoCrab brings high-performance computing to genomics, all wrapped up in the efficient, memory-safe embrace of Rust. Born out of an MSc Bioinformatics assignment where no one specifically asked for a CLI tool. *Why Rust? All the cool kids program in Rust*.
+GenoCrab brings high-performance computing to genomics, all wrapped up in the efficient, memory-safe embrace of Rust. Born out of an MSc Bioinformatics assignment where no one specifically asked for a CLI tool. *And because all the cool kids program in Rust*.
 
 ## Features
 
