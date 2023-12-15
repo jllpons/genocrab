@@ -27,8 +27,15 @@ pub enum Commands {
         #[arg(short)]
         k: usize,
     },
-    /// WIP
-    Overlap,
+    /// Return an adjacency list of the overlap graph of the input sequences
+    Overlap {
+        /// The input sequencs (optional, reads from stdin if not present)
+        #[clap(default_value = "-")]
+        input: PathBuf,
+        /// The length of overlap between sequences
+        #[arg(short)]
+        k: usize,
+    },
     /// WIP
     Superstring,
     /// WIP

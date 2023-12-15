@@ -45,7 +45,7 @@ fn create_kmer_map(kmers: Vec<String>) -> HashMap<String, i32> {
 
 // TODO: Handle errors in or before this operation
 fn count_kmer_occurrences(
-    sequence: String,
+    sequence: &str,
     kmer_map: &mut HashMap<String, i32>,
     k: usize,
 ) -> Result<(), String> {
@@ -119,7 +119,7 @@ pub fn run_kmers(sequence: String, k: usize) -> Result<String, String> {
     let mut kmer_map = create_kmer_map(kmers);
 
     // If `count_kmer_occurrences` returns an error, it will be propagated upwards
-    count_kmer_occurrences(sequence.clone(), &mut kmer_map, k)?;
+    count_kmer_occurrences(&sequence, &mut kmer_map, k)?;
 
     let ordered_counts = generate_ordered_counts(kmer_map);
     let kmer_counts_string = generate_result_string(ordered_counts);

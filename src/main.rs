@@ -4,21 +4,74 @@ use clap::Parser;
 
 mod cli;
 mod kmer;
+mod overlap;
 
-struct Fasta {
-    name: String,
+#[derive(Debug)]
+pub struct Fasta {
+    // Struct to hold a fasta sequence
+    header: String,
     seq: String,
 }
 impl Fasta {
-    fn new(name: String, seq: String) -> Self {
-        Self { name, seq }
+    fn new(header: String, seq: String) -> Self {
+        // Create a new Fasta struct
+        //
+        // # Arguments
+        //
+        // * `header` - The header of the sequence
+        // * `seq` - The sequence itself
+        //
+        // # Returns
+        // A new Fasta struct
+        Self { header, seq }
     }
     fn from_string(fasta: String) -> Self {
+        // Create a new Fasta struct from a string
+        //
+        // # Arguments
+        // * `fasta` - A string containing a fasta sequence
+        //
+        // # Returns
+        // A new Fasta struct
         let mut lines = fasta.split('\n');
-        let name = lines.next().unwrap().to_string();
+
+        let header = lines.next().unwrap().to_string();
         let seq = lines.collect::<Vec<&str>>().join("");
-        Self::new(name, seq)
+
+        Self::new(header, seq)
     }
+}
+
+fn read_mulitfasta(fasta: String) -> Vec<Fasta> {
+    // Create a vector of Fasta structs from a multi-fasta string
+    //
+    // # Arguments
+    // * `fasta` - A string containing a multi-fasta sequence
+    //
+    // # Returns
+    // A vector of Fasta structs
+    let mut fastas = Vec::new();
+
+    let lines = fasta.split('\n');
+
+    let mut header = String::new();
+    let mut seq = String::new();
+
+    for line in lines {
+        if line.starts_with('>') {
+            if seq.len() > 0 {
+                fastas.push(Fasta::new(header, seq));
+            }
+            header = line.replace('>', "").trim().to_string();
+            seq = String::new();
+        } else {
+            seq.push_str(line);
+        }
+    }
+    if seq.len() > 0 {
+        fastas.push(Fasta::new(header, seq));
+    }
+    fastas
 }
 
 fn main() {
@@ -32,6 +85,7 @@ fn main() {
         //
         cli::Commands::Kmer { input, k } => {
             let input = match input.to_str() {
+                // TODO: Make this a function
                 // TODO: Handle errors in this operation
                 Some("-") => {
                     let mut buffer = String::new();
@@ -44,7 +98,6 @@ fn main() {
                     std::process::exit(1);
                 }
             };
-
             let fasta = Fasta::from_string(input);
 
             // Run the kmer function and match the result
@@ -59,9 +112,33 @@ fn main() {
                 }
             }
         }
-        cli::Commands::Overlap => {
-            eprintln!("Overlap not implemented yet");
-            std::process::exit(1);
+        cli::Commands::Overlap { input, k } => {
+            let input = match input.to_str() {
+                Some("-") => {
+                    let mut buffer = String::new();
+                    std::io::stdin().read_to_string(&mut buffer).unwrap();
+                    buffer
+                }
+                Some(path) => std::fs::read_to_string(path).unwrap(),
+                None => {
+                    eprintln!("Invalid input path");
+                    std::process::exit(1);
+                }
+            };
+
+            let fastas = read_mulitfasta(input);
+
+            let result = overlap::run_overlap_graph(fastas, k);
+            match result {
+                Ok(result) => {
+                    println!("{}", result);
+                    std::process::exit(0);
+                }
+                Err(e) => {
+                    eprintln!("{}", e);
+                    std::process::exit(1);
+                }
+            }
         }
         cli::Commands::Superstring => {
             eprintln!("Superstring not implemented yet");
