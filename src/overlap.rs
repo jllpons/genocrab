@@ -21,6 +21,7 @@ fn mk_overlap_graph(fastas: Vec<Fasta>, k: usize) -> Vec<(String, String)> {
     //
     // # Arguments
     // * `fastas` - A vector of Fasta structs
+    // * `k` - The length of the kmer
     //
     // # Returns
     // A vector of tuples containing the headers of the sequences that overlap
@@ -28,11 +29,9 @@ fn mk_overlap_graph(fastas: Vec<Fasta>, k: usize) -> Vec<(String, String)> {
 
     for i in fastas.iter() {
         for j in fastas.iter() {
-            if i.header != j.header {
-                if check_ovelrap(&i.seq, &j.seq, k) {
+            if i.header != j.header && check_ovelrap(&i.seq, &j.seq, k) {
                     graph.push((i.header.clone(), j.header.clone()));
                 }
-            }
         }
     }
     graph
@@ -66,10 +65,9 @@ pub fn run_overlap_graph(input: Vec<Fasta>, k: usize) -> Result<String, String> 
     //
     // # Returns
     // Result containing a string with the formated output or an error message
-
-    if input.len() == 0 {
+    if input.is_empty() {
         return Err(String::from("No input sequences"));
-    } else if input.len() == 1 {
+    } else if input.is_empty() {
         return Err(String::from("Only one input sequence"));
     }
 
