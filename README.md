@@ -13,6 +13,8 @@ genomics problems. Born out of an MSc Bioinformatics assignment where no one ask
 1. **k-Mer Composition**: Display the counts of all posible k-mers of k length
    found in a given sequence ordered lexicographically.
 2. **Ovelap Graph**: Given multiple sequences, display the adjency list of ovelaps between the sequencnes.
+3. **Shortest superstring**: Return the shortest possible superstring containing
+   all of the input sequences.
 
 The rest of features are still WIP.
 

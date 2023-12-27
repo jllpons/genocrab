@@ -1,10 +1,12 @@
 use std::io::Read;
 
+use atty::Stream;
 use clap::Parser;
 
 mod cli;
 mod kmer;
 mod overlap;
+mod superstring;
 
 #[derive(Debug)]
 pub struct Fasta {
@@ -59,7 +61,7 @@ fn read_mulitfasta(fasta: String) -> Vec<Fasta> {
 
     for line in lines {
         if line.starts_with('>') {
-            if seq.len() > 0 {
+            if !seq.is_empty() {
                 fastas.push(Fasta::new(header, seq));
             }
             header = line.replace('>', "").trim().to_string();
@@ -68,7 +70,7 @@ fn read_mulitfasta(fasta: String) -> Vec<Fasta> {
             seq.push_str(line);
         }
     }
-    if seq.len() > 0 {
+    if !seq.is_empty() {
         fastas.push(Fasta::new(header, seq));
     }
     fastas
@@ -140,9 +142,34 @@ fn main() {
                 }
             }
         }
-        cli::Commands::Superstring => {
-            eprintln!("Superstring not implemented yet");
-            std::process::exit(1);
+        cli::Commands::Superstring { input } => {
+            let input = match input {
+                Some(path) => std::fs::read_to_string(path).unwrap(),
+                None => {
+                    if atty::is(Stream::Stdin) {
+                        eprintln!("Error: No input provided");
+                        std::process::exit(1);
+                    }
+                    let mut buffer = String::new();
+                    std::io::stdin().read_to_string(&mut buffer).unwrap();
+
+                    buffer
+                }
+            };
+
+            let fastas = read_mulitfasta(input);
+
+            let result = superstring::run_superstring(fastas);
+            match result {
+                Ok(result) => {
+                    println!("{}", result);
+                    std::process::exit(0);
+                }
+                Err(e) => {
+                    eprintln!("{}", e);
+                    std::process::exit(1);
+                }
+            }
         }
         cli::Commands::Debruijn => {
             eprintln!("Debruijn not implemented yet");

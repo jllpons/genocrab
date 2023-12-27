@@ -7,7 +7,7 @@ use clap::{Parser, Subcommand};
     name = "genocrab",
     version = "0.0.0",
     author = "Joan Lluis Pons <joanlluis@gmail.com>",
-    about = "A tool for solving the Rosalind problems \
+    about = "The tool for solving the Rosalind problems \
              from the command line that none asked for.",
     long_about = None,
 )]
@@ -36,8 +36,12 @@ pub enum Commands {
         #[arg(short)]
         k: usize,
     },
-    /// WIP
-    Superstring,
+    /// Return the shortest possible superstring containing all the input sequences
+    Superstring {
+        /// The input sequencs (optional, reads from stdin if not present)
+        #[clap()]
+        input: Option<PathBuf>,
+    },
     /// WIP
     Debruijn,
     /// WIP

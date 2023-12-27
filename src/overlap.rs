@@ -30,8 +30,8 @@ fn mk_overlap_graph(fastas: Vec<Fasta>, k: usize) -> Vec<(String, String)> {
     for i in fastas.iter() {
         for j in fastas.iter() {
             if i.header != j.header && check_ovelrap(&i.seq, &j.seq, k) {
-                    graph.push((i.header.clone(), j.header.clone()));
-                }
+                graph.push((i.header.clone(), j.header.clone()));
+            }
         }
     }
     graph
