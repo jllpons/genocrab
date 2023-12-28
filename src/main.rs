@@ -4,6 +4,7 @@ use atty::Stream;
 use clap::Parser;
 
 mod cli;
+mod debruijn;
 mod kmer;
 mod overlap;
 mod superstring;
@@ -171,9 +172,41 @@ fn main() {
                 }
             }
         }
-        cli::Commands::Debruijn => {
-            eprintln!("Debruijn not implemented yet");
-            std::process::exit(1);
+        cli::Commands::Debruijn {
+            input,
+            reverse_complement,
+        } => {
+            let input = match input {
+                Some(path) => std::fs::read_to_string(path).unwrap(),
+                None => {
+                    if atty::is(Stream::Stdin) {
+                        eprintln!("Error: No input provided");
+                        std::process::exit(1);
+                    }
+                    let mut buffer = String::new();
+                    std::io::stdin().read_to_string(&mut buffer).unwrap();
+
+                    buffer
+                }
+            };
+
+            let mut sequences = input.split('\n').collect::<Vec<&str>>();
+            for seq in &mut sequences {
+                *seq = seq.trim();
+            }
+            sequences = sequences.into_iter().filter(|s| !s.is_empty()).collect();
+
+            let result = debruijn::run_debruijn_graph(sequences, reverse_complement);
+            match result {
+                Ok(result) => {
+                    print!("{}", result);
+                    std::process::exit(0);
+                }
+                Err(e) => {
+                    eprintln!("{}", e);
+                    std::process::exit(1);
+                }
+            }
         }
         cli::Commands::PerfectAssembly => {
             eprintln!("PerfectAssembly not implemented yet");

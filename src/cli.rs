@@ -42,8 +42,15 @@ pub enum Commands {
         #[clap()]
         input: Option<PathBuf>,
     },
-    /// WIP
-    Debruijn,
+    // Constructs the De Bruijn graph from a set of DNA sequences and returns the adjacency list.
+    Debruijn {
+        /// The input sequence (optional, reads from stdin if not present)
+        #[clap()]
+        input: Option<PathBuf>,
+        /// Include reverse complements of the sequences in the graph construction
+        #[arg(short, long, action = clap::ArgAction::SetTrue)]
+        reverse_complement: bool,
+    },
     /// WIP
     PerfectAssembly,
     /// WIP
