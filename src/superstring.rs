@@ -40,6 +40,7 @@ fn get_min_suffix(seq1: &str, seq2: &str) -> String {
     seq2.to_string() // no non-overlapping suffix found
 }
 
+// TODO: Handle situation where there are multiple valid next nodes
 fn find_next_node(
     overlaps: &HashMap<usize, HashMap<usize, i32>>,
     node: usize,
