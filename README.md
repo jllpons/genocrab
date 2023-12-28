@@ -15,7 +15,7 @@ genomics problems. Born out of an MSc Bioinformatics assignment where no one ask
 2. **Ovelap Graph**: Given multiple sequences, display the adjency list of ovelaps between the sequencnes.
 3. **Shortest Superstring**: Return the shortest possible superstring containing
    all of the input sequences.
-4. **De Bruijn Graph**: Constructs the De Bruijn graph from a set of DNA sequences and returns the adjacency list. This feature also includes an option to consider reverse complements of the sequences in the graph construction.
+4. **De Bruijn Graph**: Constructs the De Bruijn graph from a set of DNA sequences and returns the adjacency list.
 5. **Perfect Assembly**: WIP
 6. **Assembly Quality**: WIP
 
