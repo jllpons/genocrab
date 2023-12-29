@@ -16,7 +16,7 @@ genomics problems. Born out of an MSc Bioinformatics assignment where no one ask
 3. **Shortest Superstring**: Return the shortest possible superstring containing
    all of the input sequences.
 4. **De Bruijn Graph**: Constructs the De Bruijn graph from a set of DNA sequences and returns the adjacency list.
-5. **Perfect Assembly**: WIP
+5. **Perfect Assembly**: Constructs the shortest possible cyclic superstring from a collection of DNA sequences
 6. **Assembly Quality**: WIP
 
 ## Getting Started

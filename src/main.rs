@@ -7,6 +7,7 @@ mod cli;
 mod debruijn;
 mod kmer;
 mod overlap;
+mod perfect_assembly;
 mod superstring;
 
 #[derive(Debug)]
@@ -174,7 +175,7 @@ fn main() {
         }
         cli::Commands::Debruijn {
             input,
-            reverse_complement,
+            rc
         } => {
             let input = match input {
                 Some(path) => std::fs::read_to_string(path).unwrap(),
@@ -196,7 +197,7 @@ fn main() {
             }
             sequences = sequences.into_iter().filter(|s| !s.is_empty()).collect();
 
-            let result = debruijn::run_debruijn_graph(sequences, reverse_complement);
+            let result = debruijn::run_debruijn_graph(sequences, rc);
             match result {
                 Ok(result) => {
                     print!("{}", result);
@@ -208,9 +209,38 @@ fn main() {
                 }
             }
         }
-        cli::Commands::PerfectAssembly => {
-            eprintln!("PerfectAssembly not implemented yet");
-            std::process::exit(1);
+        cli::Commands::PerfectAssembly { input } => {
+            let input = match input {
+                Some(path) => std::fs::read_to_string(path).unwrap(),
+                None => {
+                    if atty::is(Stream::Stdin) {
+                        eprintln!("Error: No input provided");
+                        std::process::exit(1);
+                    }
+                    let mut buffer = String::new();
+                    std::io::stdin().read_to_string(&mut buffer).unwrap();
+
+                    buffer
+                }
+            };
+
+            let mut sequences = input.split('\n').collect::<Vec<&str>>();
+            for seq in &mut sequences {
+                *seq = seq.trim();
+            }
+            sequences = sequences.into_iter().filter(|s| !s.is_empty()).collect();
+
+            let result = perfect_assembly::run_perfect_assembly(sequences);
+            match result {
+                Ok(result) => {
+                    println!("{}", result);
+                    std::process::exit(0);
+                }
+                Err(e) => {
+                    eprintln!("{}", e);
+                    std::process::exit(1);
+                }
+            }
         }
         cli::Commands::AssemblyQuality => {
             eprintln!("AssemblyQuality not implemented yet");

@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-fn reverse_complement(seq: &str) -> Result<String, String> {
+pub fn reverse_complement(seq: &str) -> Result<String, String> {
     // Given a sequence, return the reverse complement
     //
     // # Arguments
@@ -22,7 +22,7 @@ fn reverse_complement(seq: &str) -> Result<String, String> {
     Ok(result)
 }
 
-fn build_nodes(sequences: Vec<&str>, rc: bool) -> Result<HashSet<(String, String)>, String> {
+pub fn build_nodes(sequences: Vec<&str>, rc: bool) -> Result<HashSet<(String, String)>, String> {
     // Given a vector of sequences, return a set of nodes
     //
     // # Arguments

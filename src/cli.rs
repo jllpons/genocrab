@@ -49,10 +49,14 @@ pub enum Commands {
         input: Option<PathBuf>,
         /// Include reverse complements of the sequences in the graph construction
         #[arg(short, long, action = clap::ArgAction::SetTrue)]
-        reverse_complement: bool,
+        rc: bool,
     },
-    /// WIP
-    PerfectAssembly,
+    /// Constructs the shortest possible cyclic superstring from a collection of DNA sequences
+    PerfectAssembly {
+        /// The input sequence (optional, reads from stdin if not present)
+        #[clap()]
+        input: Option<PathBuf>,
+    },
     /// WIP
     AssemblyQuality,
 }

@@ -74,7 +74,7 @@ fn find_next_node(
     }
 }
 
-fn shortest_superstring(sequences: Vec<String>) -> Result<String, &'static str> {
+pub fn shortest_superstring(sequences: Vec<String>) -> Result<String, &'static str> {
     // Find the shortest superstring of a list of sequences
     //
     // # Arguments
