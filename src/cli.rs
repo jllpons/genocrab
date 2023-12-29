@@ -42,7 +42,7 @@ pub enum Commands {
         #[clap()]
         input: Option<PathBuf>,
     },
-    // Constructs the De Bruijn graph from a set of DNA sequences and returns the adjacency list.
+    /// Constructs the De Bruijn graph from a set of DNA sequences and returns the adjacency list.
     Debruijn {
         /// The input sequence (optional, reads from stdin if not present)
         #[clap()]

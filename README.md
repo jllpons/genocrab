@@ -45,7 +45,7 @@ Commands:
   kmer              Return the number of times each kmer appears in the input sequence
   overlap           Return an adjacency list of the overlap graph of the input sequences
   superstring       Return the shortest possible superstring containing all the input sequences
-  debruijn
+  debruijn          Constructs the De Bruijn graph from a set of DNA sequences and returns the adjacency list
   perfect-assembly  Constructs the shortest possible cyclic superstring from a collection of DNA sequences
   assembly-quality  Given a collection of reads, ouput the N50 and N75 assembly quality metrics
   help              Print this message or the help of the given subcommand(s)
