@@ -9,6 +9,7 @@ mod kmer;
 mod overlap;
 mod perfect_assembly;
 mod superstring;
+mod assembly_quality;
 
 #[derive(Debug)]
 pub struct Fasta {
@@ -242,9 +243,30 @@ fn main() {
                 }
             }
         }
-        cli::Commands::AssemblyQuality => {
-            eprintln!("AssemblyQuality not implemented yet");
-            std::process::exit(1);
+        cli::Commands::AssemblyQuality { input } => {
+            let input = match input {
+                Some(path) => std::fs::read_to_string(path).unwrap(),
+                None => {
+                    if atty::is(Stream::Stdin) {
+                        eprintln!("Error: No input provided");
+                        std::process::exit(1);
+                    }
+                    let mut buffer = String::new();
+                    std::io::stdin().read_to_string(&mut buffer).unwrap();
+
+                    buffer
+                }
+            };
+
+            let mut sequences = input.split('\n').collect::<Vec<&str>>();
+            for seq in &mut sequences {
+                *seq = seq.trim();
+            }
+            sequences = sequences.into_iter().filter(|s| !s.is_empty()).collect();
+
+            let result = assembly_quality::run_assembly_quality(sequences);
+            println!("{}", result);
+            std::process::exit(0);
         }
     }
 }

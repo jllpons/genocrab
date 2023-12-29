@@ -57,6 +57,10 @@ pub enum Commands {
         #[clap()]
         input: Option<PathBuf>,
     },
-    /// WIP
-    AssemblyQuality,
+    /// Given a collection of reads, ouput the N50 and N75 assembly quality metrics
+    AssemblyQuality {
+        /// The input sequence (optional, reads from stdin if not present)
+        #[clap()]
+        input: Option<PathBuf>,
+    },
 }
